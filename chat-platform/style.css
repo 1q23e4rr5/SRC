@@ -131,6 +131,7 @@ body {
     border: 1px solid var(--border-color);
     border-radius: 5px;
     margin-bottom: 10px;
+    max-height: 70vh;
 }
 
 .message {
@@ -138,6 +139,7 @@ body {
     margin: 5px 0;
     border-radius: 10px;
     max-width: 70%;
+    word-wrap: break-word;
 }
 
 .message-sent {
@@ -159,4 +161,21 @@ body {
 
 .message-input input {
     flex: 1;
+}
+
+/* جدول‌ها */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    text-align: right;
+}
+
+th {
+    background-color: var(--primary-color);
+    color: white;
 }
