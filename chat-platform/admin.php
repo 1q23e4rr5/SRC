@@ -1,16 +1,9 @@
 <?php
-require_once 'config.php';
-
 // بررسی دسترسی ادمین
 $admin_phone = '09120000000';
 if (!isset($_SESSION['user_phone']) || $_SESSION['user_phone'] !== $admin_phone) {
-    // اگر کاربر لاگین نکرده یا ادمین نیست، به صفحه ورود هدایت شود
-    if (!isset($_SESSION['user_phone'])) {
-        header("Location: login.php");
-        exit();
-    }
-    
-    die("دسترسی غیر مجاز");
+    header("Location: /login");
+    exit();
 }
 
 // دریافت تمام کاربران
@@ -39,12 +32,11 @@ $messages = $stmt->fetchAll();
         <h1>پنل مدیریت سیستم چت</h1>
         
         <div style="margin: 20px 0;">
-            <a href="dashboard.php" class="btn btn-primary">بازگشت به پنل کاربری</a>
-            <a href="logout.php" class="btn" style="background-color: #dc3545; color: white;">خروج</a>
+            <a href="/dashboard" class="btn btn-primary">بازگشت به پنل کاربری</a>
+            <a href="/logout" class="btn" style="background-color: #dc3545; color: white;">خروج</a>
         </div>
 
-        <!-- لیست کاربران -->
-        <h2>لیست کاربران (<?php echo count($users); ?> نفر)</h2>
+        <h2>لیست کاربران (<?= count($users) ?> نفر)</h2>
         <div style="overflow-x: auto;">
             <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
                 <thead>
@@ -58,18 +50,17 @@ $messages = $stmt->fetchAll();
                 <tbody>
                     <?php foreach ($users as $user): ?>
                     <tr>
-                        <td style="padding: 10px; border: 1px solid var(--border-color);"><?php echo htmlspecialchars($user['name']); ?></td>
-                        <td style="padding: 10px; border: 1px solid var(--border-color);"><?php echo $user['phone']; ?></td>
-                        <td style="padding: 10px; border: 1px solid var(--border-color);"><?php echo $user['code']; ?></td>
-                        <td style="padding: 10px; border: 1px solid var(--border-color);"><?php echo $user['created_at']; ?></td>
+                        <td style="padding: 10px; border: 1px solid var(--border-color);"><?= htmlspecialchars($user['name']) ?></td>
+                        <td style="padding: 10px; border: 1px solid var(--border-color);"><?= $user['phone'] ?></td>
+                        <td style="padding: 10px; border: 1px solid var(--border-color);"><?= $user['code'] ?></td>
+                        <td style="padding: 10px; border: 1px solid var(--border-color);"><?= $user['created_at'] ?></td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
 
-        <!-- تاریخچه چت‌ها -->
-        <h2>تاریخچه چت‌ها (<?php echo count($messages); ?> پیام)</h2>
+        <h2>تاریخچه چت‌ها (<?= count($messages) ?> پیام)</h2>
         <div style="overflow-x: auto;">
             <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
                 <thead>
@@ -83,10 +74,10 @@ $messages = $stmt->fetchAll();
                 <tbody>
                     <?php foreach ($messages as $message): ?>
                     <tr>
-                        <td style="padding: 10px; border: 1px solid var(--border-color);"><?php echo htmlspecialchars($message['sender_name']); ?></td>
-                        <td style="padding: 10px; border: 1px solid var(--border-color);"><?php echo htmlspecialchars($message['receiver_name']); ?></td>
-                        <td style="padding: 10px; border: 1px solid var(--border-color);"><?php echo htmlspecialchars($message['message']); ?></td>
-                        <td style="padding: 10px; border: 1px solid var(--border-color);"><?php echo $message['created_at']; ?></td>
+                        <td style="padding: 10px; border: 1px solid var(--border-color);"><?= htmlspecialchars($message['sender_name']) ?></td>
+                        <td style="padding: 10px; border: 1px solid var(--border-color);"><?= htmlspecialchars($message['receiver_name']) ?></td>
+                        <td style="padding: 10px; border: 1px solid var(--border-color);"><?= htmlspecialchars($message['message']) ?></td>
+                        <td style="padding: 10px; border: 1px solid var(--border-color);"><?= $message['created_at'] ?></td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
