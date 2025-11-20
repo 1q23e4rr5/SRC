@@ -1,5 +1,6 @@
 <?php
-require_once 'config.php';
+$lang = $_SESSION['language'] ?? 'fa';
+$dir = $lang === 'ar' ? 'rtl' : 'ltr';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone = $_POST['phone'];
@@ -17,57 +18,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['font_size'] = $user['font_size'];
         $_SESSION['language'] = $user['language'];
         
-        header("Location: dashboard.php");
+        header("Location: /dashboard");
         exit();
     } else {
         $error = "شماره موبایل یا رمز عبور اشتباه است";
     }
 }
-
-$lang = $_SESSION['language'] ?? 'fa';
 ?>
 <!DOCTYPE html>
-<html lang="fa" dir="<?php echo $lang === 'ar' ? 'rtl' : 'ltr'; ?>">
+<html lang="fa" dir="<?= $dir ?>">
 <head>
     <meta charset="UTF-8">
-    <title><?php echo getLanguageText('login', $lang); ?></title>
+    <title>ورود</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="theme-light">
     <div class="container">
         <div class="form-container">
-            <h2 style="text-align: center; margin-bottom: 30px;"><?php echo getLanguageText('login', $lang); ?></h2>
+            <h2 style="text-align: center; margin-bottom: 30px;">ورود به پلتفرم چت</h2>
             
             <?php if (isset($error)): ?>
-                <div class="alert alert-error"><?php echo $error; ?></div>
+                <div class="alert alert-error"><?= $error ?></div>
             <?php endif; ?>
             
             <form method="POST">
                 <div class="form-group">
-                    <label><?php echo getLanguageText('phone', $lang); ?>:</label>
+                    <label>شماره موبایل:</label>
                     <input type="tel" name="phone" class="form-control" required>
                 </div>
                 
                 <div class="form-group">
-                    <label><?php echo getLanguageText('password', $lang); ?>:</label>
+                    <label>رمز عبور:</label>
                     <input type="password" name="password" class="form-control" required>
                 </div>
                 
-                <button type="submit" class="btn btn-primary btn-block">
-                    <?php echo getLanguageText('login', $lang); ?>
-                </button>
+                <button type="submit" class="btn btn-primary btn-block">ورود</button>
             </form>
             
             <div style="text-align: center; margin-top: 20px;">
-                <a href="register.php" style="color: var(--primary-color);">
-                    <?php echo getLanguageText('register', $lang); ?>
-                </a>
+                <a href="/register" style="color: var(--primary-color);">حساب کاربری ندارید؟ ثبت نام کنید</a>
             </div>
             
             <div style="text-align: center; margin-top: 10px;">
-                <a href="admin.php" style="color: var(--secondary-color); font-size: 12px;">
-                    پنل مدیریت
-                </a>
+                <a href="/admin" style="color: var(--secondary-color); font-size: 12px;">پنل مدیریت</a>
             </div>
         </div>
     </div>
